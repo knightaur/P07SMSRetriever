@@ -55,7 +55,6 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginRight="25dp"
                     android:ems="10"
-                    android:hint="1st Word"
                     android:inputType="text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -72,9 +71,8 @@
                     android:layout_marginRight="25dp"
                     android:text="Retrieve SMS"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et2" />
+                    app:layout_constraintTop_toBottomOf="@+id/et1" />
 
                 <TextView
                     android:id="@+id/tv"
@@ -89,21 +87,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btnRetrieve1" />
 
-                <EditText
-                    android:id="@+id/et2"
+                <Button
+                    android:id="@+id/btnEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:layout_marginLeft="25dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="25dp"
                     android:layout_marginRight="25dp"
-                    android:ems="10"
-                    android:hint="2nd Word"
-                    android:inputType="textPersonName"
+                    android:text="Send To Email"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et1" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv" />
             </android.support.constraint.ConstraintLayout>
         </ScrollView>
 

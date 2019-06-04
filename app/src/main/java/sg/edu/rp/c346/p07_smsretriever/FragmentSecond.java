@@ -3,6 +3,7 @@ package sg.edu.rp.c346.p07_smsretriever;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -22,8 +23,8 @@ import android.widget.Toast;
 
 public class FragmentSecond extends Fragment {
 
-    Button btnRetrieve;
-    EditText et1, et2;
+    Button btnRetrieve, btnEmail;
+    EditText et1;
     TextView tv;
 
     @Override
@@ -34,17 +35,17 @@ public class FragmentSecond extends Fragment {
 
         tv = view.findViewById(R.id.tv);
         btnRetrieve = view.findViewById(R.id.btnRetrieve1);
+        btnEmail = view.findViewById(R.id.btnEmail);
         et1 = view.findViewById(R.id.et1);
-        et2 = view.findViewById(R.id.et2);
 
         btnRetrieve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String a;
-                String b;
-                if(et1.getText().toString().length() > 0 && et2.getText().toString().length() > 0){
-                    a = et1.getText().toString();
-                    b = et2.getText().toString();
+                String[] array;
+                if(et1.getText().toString().length() > 0){
+                        a = et1.getText().toString();
+                        array = a.split("\\s+");
                     int permissionCheck = PermissionChecker.checkSelfPermission
                             (getActivity(), Manifest.permission.READ_SMS);
 
@@ -62,9 +63,13 @@ public class FragmentSecond extends Fragment {
                     //  query the content provider
                     ContentResolver cr = getActivity().getContentResolver();
                     // The filter String
-                    String filter="body LIKE ? OR body LIKE ?";
+                    String filter="body LIKE ?";
                     // The matches for the ?
-                    String[] args = {"%" + a + "%", "%" + b + "%"};
+                    String[] args = new String[array.length];
+                    for(int i = 0; i < array.length ; i++){
+                            args[i] = "%" + array[i] + "%";
+                            filter += " OR body LIKE ?";
+                    }
                     // Fetch SMS Message from Built-in Content Provider
                     Cursor cursor = cr.query(uri, reqCols, filter, args, null);
                     String smsBody = "";
@@ -94,6 +99,20 @@ public class FragmentSecond extends Fragment {
                 }
             }
         });
+
+        btnEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"francisanthonytoha@gmail.com"});
+                email.putExtra(Intent.EXTRA_SUBJECT, "SMS");
+                email.putExtra(Intent.EXTRA_TEXT, tv.getText().toString());
+                email.setType("message/rfc822");
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+            }
+        });
+
+
         return view;
     }
 }
